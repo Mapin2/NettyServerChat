@@ -33,7 +33,7 @@ import io.netty.util.concurrent.FutureListener;
 import io.netty.util.concurrent.ScheduledFuture;
 
 /**
- * General tests
+ * General netty tests 
  */
 public class EmbeddedChannelTest {
 

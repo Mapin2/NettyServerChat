@@ -121,9 +121,13 @@ public class ChatServerHandler extends SimpleChannelInboundHandler<String> {
 				// XXX TEST - Point 1.2 Nickname Change
 				// Delete the command from the string
 				String newNickName = msg.replaceFirst(command, "").trim().toLowerCase();
-				newNickName = newNickName.substring(0, 20);
+				
 				if (!StringUtil.isNullOrEmpty(newNickName) && !nameUtils.getNickNames().contains(newNickName)) {
-
+					// The NickName will be 20 characters max
+					if (newNickName.length() > 20) {
+						newNickName = newNickName.substring(0, 20);
+					}
+					
 					nameUtils.getNickNames().remove(incoming.getNickName());
 					nameUtils.getNickNames().add(newNickName);
 					incoming.setNickName(newNickName);
@@ -155,9 +159,12 @@ public class ChatServerHandler extends SimpleChannelInboundHandler<String> {
 				// XXX TEST - Point 1.4 Join Rooms
 				// Delete the command from the string
 				String newRoomName = msg.replaceFirst(command, "").trim().toLowerCase();
-				// The Room Name will be 20 characters max
-				newRoomName = newRoomName.substring(0, 20);
 				if (!StringUtil.isNullOrEmpty(newRoomName) && !incomingChannelGroup.getRoomName().equals(newRoomName)) {
+					// The Room Name will be 20 characters max
+					if (newRoomName.length() > 20) {
+						newRoomName = newRoomName.substring(0, 20);
+					}
+					
 					// If the rooms already exists join
 					if (chatRooms.containsKey(newRoomName)) {
 
@@ -196,17 +203,17 @@ public class ChatServerHandler extends SimpleChannelInboundHandler<String> {
 				// (Only 30 per minute)
 				// Send the message to everybody else (not yourself) in the same channelGroup,
 				// we do this by iterating over all known
-				for (Channel channel : incomingChannelGroup.getChannelGroup()) {
-					if (channel != incoming.getChannel()) {
-						if (incoming.checkMessageLimit()) {
+				if (incoming.checkMessageLimit()) {
+					for (Channel channel : incomingChannelGroup.getChannelGroup()) {
+						if (channel != incoming.getChannel()) {
 							String finalMessage = "[" + incoming.getNickName() + "]: " + msg + "\n";
 							incomingChannelGroup.saveMessage(finalMessage);
 							channel.writeAndFlush(finalMessage);
-						} else {
-							incoming.getChannel().writeAndFlush(
-									"[SERVER] - You have exceeded the limit of 30 messages per minute. Wait :)\n");
-						}
+						} 
 					}
+				} else {
+					incoming.getChannel().writeAndFlush(
+							"[SERVER] - You have exceeded the limit of 30 messages per minute. Wait :)\n");
 				}
 
 				break;

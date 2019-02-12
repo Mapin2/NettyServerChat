@@ -30,9 +30,9 @@ public class ChatRoom {
 
 	// This method always stores the last 5 messages of the channel group
 	public void saveMessage(String finalMessage) {
-		if (roomHistory.size() < 5) {
+		if (roomHistory.size() < 5 && !roomHistory.contains(finalMessage)) {
 			roomHistory.add(finalMessage);
-		} else {
+		} else if (roomHistory.size() >= 5 && !roomHistory.contains(finalMessage)) {
 			roomHistory.remove(0);
 			roomHistory.add(finalMessage);
 		}
