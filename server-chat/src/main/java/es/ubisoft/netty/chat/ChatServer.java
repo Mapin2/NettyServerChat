@@ -21,7 +21,6 @@ public class ChatServer {
 
 	public void run() throws Exception {
 		// NioEventLoopGroup is a multithreaded event loop that handles I/O operation.
-
 		// BossGroup accepts an incoming connection
 		EventLoopGroup bossGroup = new NioEventLoopGroup();
 
@@ -35,10 +34,13 @@ public class ChatServer {
 			ServerBootstrap bootstrap = new ServerBootstrap();
 			bootstrap.group(bossGroup, workerGroup).channel(NioServerSocketChannel.class)
 					.childHandler(new ChatServerInitializer())
-					.option(ChannelOption.SO_BACKLOG, 1000) // Number of connections queued
+					.option(ChannelOption.SO_BACKLOG, 1500) // Number of connections queued
 					.childOption(ChannelOption.SO_KEEPALIVE, true)
 					.childOption(ChannelOption.TCP_NODELAY, true);
 
+			// A Channel is a nexus to a network socket or a component which is capable of
+			// I/O operations such as read, write, connect, and bind.
+			// The FutureChannel is the result of an asynchronous Channel I/O operation.
 			// Bind and start to accept incoming connections.
 			ChannelFuture channelFuture = bootstrap.bind(port).sync();
 			// Wait until the server socket is closed.
@@ -47,6 +49,9 @@ public class ChatServer {
 			// Shut down all event loops to terminate all threads.
 			bossGroup.shutdownGracefully();
 			workerGroup.shutdownGracefully();
+			// Wait until all threads are terminated.
+			bossGroup.terminationFuture().sync();
+			workerGroup.terminationFuture().sync();
 		}
 	}
 }

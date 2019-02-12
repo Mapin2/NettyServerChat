@@ -32,6 +32,9 @@ import io.netty.util.concurrent.Future;
 import io.netty.util.concurrent.FutureListener;
 import io.netty.util.concurrent.ScheduledFuture;
 
+/**
+ * General tests
+ */
 public class EmbeddedChannelTest {
 
     @Test(timeout = 2000)
@@ -148,7 +151,6 @@ public class EmbeddedChannelTest {
         assertNull(channel.readOutbound());
     }
 
-    // See https://github.com/netty/netty/issues/4316.
     @Test(timeout = 2000)
     public void testFireChannelInactiveAndUnregisteredOnClose() throws InterruptedException {
         testFireChannelInactiveAndUnregistered(new Action() {
