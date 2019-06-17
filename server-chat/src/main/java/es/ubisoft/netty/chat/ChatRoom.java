@@ -20,11 +20,11 @@ public class ChatRoom {
 		this.activeUsersCounter = 0;
 	}
 
-	public void incrementActiveMessageCounter() {
+	public void incrementActiveUsersCounter() {
 		this.activeUsersCounter++;
 	}
 
-	public void decrementActiveMessageCounter() {
+	public void decrementActiveUsersCounter() {
 		this.activeUsersCounter--;
 	}
 

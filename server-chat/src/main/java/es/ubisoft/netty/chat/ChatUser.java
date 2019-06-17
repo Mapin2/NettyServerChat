@@ -3,6 +3,7 @@ package es.ubisoft.netty.chat;
 import java.time.Duration;
 import java.time.LocalTime;
 
+import es.ubisoft.netty.chat.utils.Constants;
 import io.netty.channel.Channel;
 import io.netty.util.internal.MathUtil;
 
@@ -12,10 +13,8 @@ public class ChatUser {
 	private String nickName;
 	private ChatRoom chatRoom;
 	private int messageCounter;
-	@SuppressWarnings("unused")
-	public static final int MESSAGE_LIMIT = 30;
 	private LocalTime firstMessageCounterToLimit;
-	
+
 	public ChatUser(Channel channel, String nickName, ChatRoom chatRoom) {
 
 		this.channel = channel;
@@ -27,21 +26,23 @@ public class ChatUser {
 	// XXX TEST - Point 1.5 Messages limit (Only 30 per minute)
 	public boolean checkMessageLimit() {
 		boolean result = false;
-		
-		// First we check if more than one minute has passed since our first message to reset counterss
-		if (this.firstMessageCounterToLimit != null && Duration.between(this.firstMessageCounterToLimit, LocalTime.now()).toMinutes() >= 1) {
+
+		// First we check if more than one minute has passed since our first message to
+		// reset counterss
+		if (this.firstMessageCounterToLimit != null
+				&& Duration.between(this.firstMessageCounterToLimit, LocalTime.now()).toMinutes() >= 1) {
 			this.messageCounter = 0;
 		}
-		
+
 		// If messageCounter is less than the MESSAGE_LIMIT we can message
-		if (MathUtil.compare(this.messageCounter, MESSAGE_LIMIT) == -1) {
+		if (MathUtil.compare(this.messageCounter, Constants.MESSAGE_LIMIT) == -1) {
 			result = true;
 			this.incrementMessageCounter();
 		}
-		
+
 		return result;
 	}
-	
+
 	private void incrementMessageCounter() {
 		// We set the time when messageCounter is 0
 		if (this.messageCounter == 0) {
@@ -49,7 +50,7 @@ public class ChatUser {
 		}
 		this.messageCounter++;
 	}
-	
+
 	public Channel getChannel() {
 		return channel;
 	}

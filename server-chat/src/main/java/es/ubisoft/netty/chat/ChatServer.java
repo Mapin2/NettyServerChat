@@ -9,10 +9,10 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 
 public class ChatServer {
 
-	private final int port;
+	private final int PORT;
 
 	public ChatServer(int port) {
-		this.port = port;
+		this.PORT = port;
 	}
 
 	public static void main(String[] args) throws Exception {
@@ -42,7 +42,7 @@ public class ChatServer {
 			// I/O operations such as read, write, connect, and bind.
 			// The FutureChannel is the result of an asynchronous Channel I/O operation.
 			// Bind and start to accept incoming connections.
-			ChannelFuture channelFuture = bootstrap.bind(port).sync();
+			ChannelFuture channelFuture = bootstrap.bind(PORT).sync();
 			// Wait until the server socket is closed.
 			channelFuture.channel().closeFuture().sync();
 		} finally {

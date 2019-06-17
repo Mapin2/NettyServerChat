@@ -13,7 +13,6 @@ import java.util.Set;
  */
 public class NameUtils {
 
-	private final String ALPHANUMERIC_VALUES = "abcdefghijklmnñopqrstuvwxyz1234567890";
 	private static NameUtils nameUtils;
 	private Random randSeed;
 	private static Set<String> nickNames;
@@ -33,7 +32,7 @@ public class NameUtils {
 			int length = this.randSeed.nextInt(5) + 5;
 			for (int i = 0; i < length; i++) {
 				nickName.append(
-						this.ALPHANUMERIC_VALUES.charAt(this.randSeed.nextInt(this.ALPHANUMERIC_VALUES.length())));
+						Constants.ALPHANUMERIC_VALUES.charAt(this.randSeed.nextInt(Constants.ALPHANUMERIC_VALUES.length())));
 			}
 			if (nickNames.contains(nickName.toString())) {
 				nickName = new StringBuilder();
@@ -47,5 +46,5 @@ public class NameUtils {
 	public Set<String> getNickNames() {
 		return nickNames;
 	}
-	
+
 }
