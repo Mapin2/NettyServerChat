@@ -1,11 +1,10 @@
-package es.ubisoft.netty.chat;
+package es.mariopinto.netty.chat;
 
-import java.lang.invoke.ConstantCallSite;
 import java.util.HashMap;
 import java.util.Map;
 
-import es.ubisoft.netty.chat.utils.Constants;
-import es.ubisoft.netty.chat.utils.NameUtils;
+import es.mariopinto.netty.chat.utils.Constants;
+import es.mariopinto.netty.chat.utils.NameUtils;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;

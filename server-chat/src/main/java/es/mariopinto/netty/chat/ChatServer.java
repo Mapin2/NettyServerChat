@@ -1,4 +1,4 @@
-package es.ubisoft.netty.chat;
+package es.mariopinto.netty.chat;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;

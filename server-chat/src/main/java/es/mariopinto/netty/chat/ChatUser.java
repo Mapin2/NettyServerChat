@@ -1,9 +1,9 @@
-package es.ubisoft.netty.chat;
+package es.mariopinto.netty.chat;
 
 import java.time.Duration;
 import java.time.LocalTime;
 
-import es.ubisoft.netty.chat.utils.Constants;
+import es.mariopinto.netty.chat.utils.Constants;
 import io.netty.channel.Channel;
 import io.netty.util.internal.MathUtil;
 

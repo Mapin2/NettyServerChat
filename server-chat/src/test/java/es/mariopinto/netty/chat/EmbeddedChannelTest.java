@@ -1,4 +1,4 @@
-package es.ubisoft.netty.chat;
+package es.mariopinto.netty.chat;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;

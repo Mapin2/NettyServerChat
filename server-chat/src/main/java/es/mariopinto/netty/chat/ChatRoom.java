@@ -1,4 +1,4 @@
-package es.ubisoft.netty.chat;
+package es.mariopinto.netty.chat;
 
 import java.util.ArrayList;
 import java.util.List;

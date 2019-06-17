@@ -1,4 +1,4 @@
-package es.ubisoft.netty.chat.utils;
+package es.mariopinto.netty.chat.utils;
 
 import java.util.HashSet;
 import java.util.Random;
