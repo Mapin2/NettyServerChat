@@ -13,7 +13,7 @@ public class ChatUser {
 	private String nickName;
 	private ChatRoom chatRoom;
 	private int messageCounter;
-	private LocalTime firstMessageCounterToLimit;
+	private LocalTime localTimeToLimit;
 
 	public ChatUser(Channel channel, String nickName, ChatRoom chatRoom) {
 
@@ -28,9 +28,9 @@ public class ChatUser {
 		boolean result = false;
 
 		// First we check if more than one minute has passed since our first message to
-		// reset counterss
-		if (this.firstMessageCounterToLimit != null
-				&& Duration.between(this.firstMessageCounterToLimit, LocalTime.now()).toMinutes() >= 1) {
+		// reset counters
+		if (this.localTimeToLimit != null
+				&& Duration.between(this.localTimeToLimit, LocalTime.now()).toMinutes() >= 1) {
 			this.messageCounter = 0;
 		}
 
@@ -44,9 +44,11 @@ public class ChatUser {
 	}
 
 	private void incrementMessageCounter() {
-		// We set the time when messageCounter is 0
-		if (this.messageCounter == 0) {
-			this.firstMessageCounterToLimit = LocalTime.now();
+		// We set the time when messageCounter is 29 
+		if (this.messageCounter == (Constants.MESSAGE_LIMIT - 1)) {
+			this.localTimeToLimit = LocalTime.now();
+		} else {
+			this.localTimeToLimit = null;
 		}
 		this.messageCounter++;
 	}

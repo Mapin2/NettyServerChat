@@ -213,7 +213,7 @@ public class ChatServerHandler extends SimpleChannelInboundHandler<String> {
 						}
 					} else {
 						incoming.getChannel().writeAndFlush(
-								"[SERVER] - You have exceeded the limit of 30 messages per minute. Wait :)\n");
+								"[SERVER] - You have exceeded the limit of 30 messages. Wait a minute :)\n");
 					}
 	
 				break;
