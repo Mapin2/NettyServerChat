@@ -1,7 +1,6 @@
 package es.mariopinto.netty.chat;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.concurrent.ConcurrentLinkedDeque;
 
 import io.netty.channel.group.ChannelGroup;
 
@@ -9,14 +8,15 @@ public class ChatRoom {
 
 	private ChannelGroup channelGroup;
 	private String roomName;
-	private List<String> roomHistory;
+	// Personally selected this concurrent collection "Deque" thinking to make use of the remove/add last wich the queue doesn't have
+	private ConcurrentLinkedDeque<String> roomHistory;
 	private int activeUsersCounter;
 
 	public ChatRoom(ChannelGroup channelGroup, String roomName) {
 
 		this.channelGroup = channelGroup;
 		this.roomName = roomName;
-		this.roomHistory = new ArrayList<>();
+		this.roomHistory = new ConcurrentLinkedDeque<>();
 		this.activeUsersCounter = 0;
 	}
 
@@ -30,10 +30,10 @@ public class ChatRoom {
 
 	// This method always stores the last 5 messages of the channel group
 	public void saveMessage(String finalMessage) {
-		if (roomHistory.size() < 5 && !roomHistory.contains(finalMessage)) {
+		if (roomHistory.size() < 5) {
 			roomHistory.add(finalMessage);
-		} else if (roomHistory.size() >= 5 && !roomHistory.contains(finalMessage)) {
-			roomHistory.remove(0);
+		} else if (roomHistory.size() >= 5) {
+			roomHistory.removeFirst();
 			roomHistory.add(finalMessage);
 		}
 	}
@@ -54,11 +54,11 @@ public class ChatRoom {
 		this.roomName = roomName;
 	}
 
-	public List<String> getRoomHistory() {
+	public ConcurrentLinkedDeque<String> getRoomHistory() {
 		return roomHistory;
 	}
 
-	public void setRoomHistory(List<String> roomHistory) {
+	public void setRoomHistory(ConcurrentLinkedDeque<String> roomHistory) {
 		this.roomHistory = roomHistory;
 	}
 

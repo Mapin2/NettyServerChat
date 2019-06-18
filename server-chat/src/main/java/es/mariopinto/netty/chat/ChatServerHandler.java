@@ -204,13 +204,14 @@ public class ChatServerHandler extends SimpleChannelInboundHandler<String> {
 					// Send the message to everybody else (not yourself) in the same channelGroup,
 					// we do this by iterating over all known
 					if (incoming.checkMessageLimit()) {
+						String finalMessage = "[" + incoming.getNickName() + "]: " + msg + "\n";
 						for (Channel channel : incomingChannelGroup.getChannelGroup()) {
 							if (channel != incoming.getChannel()) {
-								String finalMessage = "[" + incoming.getNickName() + "]: " + msg + "\n";
-								incomingChannelGroup.saveMessage(finalMessage);
 								channel.writeAndFlush(finalMessage);
 							}
 						}
+						// We store the message on the history
+						incomingChannelGroup.saveMessage(finalMessage);
 					} else {
 						incoming.getChannel().writeAndFlush(
 								"[SERVER] - You have exceeded the limit of 30 messages. Wait a minute :)\n");
