@@ -1,6 +1,6 @@
 # NettyServerChat
 
-Simple TCP Netty/Java Server Chat based on a Ubisoft test for the Server Programmer position.
+Simple TCP Netty/Java Server Chat based on a test for the Server Programmer position.
 
 I leave here the specification:
 
